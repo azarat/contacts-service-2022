@@ -1,0 +1,41 @@
+{
+  "name": "contacts-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/day-drive/partners-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/day-drive/partners-service/issues"
+  },
+  "homepage": "https://github.com/day-drive/partners-service#readme",
+  "dependencies": {
+    "@day-drive/user-sdk": "^1.0.8",
+    "aws-sdk": "^2.1045.0",
+    "dotenv": "^10.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "fastify": "^3.24.1",
+    "fastify-swagger": "^4.12.6",
+    "mongoose": "^6.1.0",
+    "telegraf": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.12",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "eslint": "^8.4.1",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}
