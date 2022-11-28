@@ -32,11 +32,13 @@ class Config {
   botSparePartsToken: string
   botSparePartsPassword: string
   botCarOrderToken: string
+  botToken: string
   botCarOrderPassword: string
 
   constructor() {
     this.apiHost = process.env.API_HOST
     this.port = process.env.PORT
+    this.botToken = process.env.BOT_TOKEN
   }
 
   public async init(): Promise<void> {
