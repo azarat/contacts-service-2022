@@ -7,42 +7,88 @@ import DatabaseRepository from './db.repository'
 import { SchemaEnum } from './enums/schemas.enum'
 
 export const runBot = async (type: BotEnum): Promise<void> => {
-  const { token, password, repository } = {
-    PARTNERS_BOT: {
-      token: config.botPartnersToken,
-      password: config.botPartnersPassword,
-      repository: new DatabaseRepository(SchemaEnum.PARTNER),
-    },
-    FEEDBACK_BOT: {
-      token: config.botFeedbackToken,
-      password: config.botFeedbackPassword,
-      repository: new DatabaseRepository(SchemaEnum.FEEDBACK),
-    },
-    ADD_MODIFICATION_BOT: {
-      token: config.botModificationToken,
-      password: config.botModificationPassword,
-      repository: new DatabaseRepository(SchemaEnum.MODIFICATION),
-    },
-    SPARE_PARTS_BOT: {
-      token: config.botSparePartsToken,
-      password: config.botSparePartsPassword,
-      repository: new DatabaseRepository(SchemaEnum.SPARE_PARTS),
-    },
-    CAR_ORDER_BOT: {
-      token: config.botCarOrderToken,
-      password: config.botCarOrderPassword,
-      repository: new DatabaseRepository(SchemaEnum.CAR_ORDER),
-    },
-  }[type]
+  // const { token, password, repository } = {
+  //   PARTNERS_BOT: {
+  //     token: config.botPartnersToken,
+  //     password: config.botPartnersPassword,
+  //     repository: new DatabaseRepository(SchemaEnum.PARTNER),
+  //   },
+  //   FEEDBACK_BOT: {
+  //     token: config.botFeedbackToken,
+  //     password: config.botFeedbackPassword,
+  //     repository: new DatabaseRepository(SchemaEnum.FEEDBACK),
+  //   },
+  //   ADD_MODIFICATION_BOT: {
+  //     token: config.botModificationToken,
+  //     password: config.botModificationPassword,
+  //     repository: new DatabaseRepository(SchemaEnum.MODIFICATION),
+  //   },
+  //   SPARE_PARTS_BOT: {
+  //     token: config.botSparePartsToken,
+  //     password: config.botSparePartsPassword,
+  //     repository: new DatabaseRepository(SchemaEnum.SPARE_PARTS),
+  //   },
+  //   CAR_ORDER_BOT: {
+  //     token: config.botCarOrderToken,
+  //     password: config.botCarOrderPassword,
+  //     repository: new DatabaseRepository(SchemaEnum.CAR_ORDER),
+  //   },
+  // }[type]
+
+  const token = config.botToken
+  const password = "registrate"
 
   const bot = new Telegraf(token)
   bot.start((ctx) => {
     ctx.reply('Приветствую. Введите пароль')
   })
 
-  bot.command(`/${password}`, async (ctx) => {
+  bot.action(`/registerPARTNERS`, async (ctx) => {
+    const repository = new DatabaseRepository(SchemaEnum.PARTNER)
     await repository.createRecord(ctx.chat.id)
-    ctx.reply('Успешно авторизировались')
+    ctx.reply('Сервіс PARTNERS додано для відстеження')
+  })
+
+  bot.action(`/registerFEEDBACK`, async (ctx) => {
+    const repository = new DatabaseRepository(SchemaEnum.FEEDBACK)
+    await repository.createRecord(ctx.chat.id)
+    ctx.reply('Сервіс FEEDBACK додано для відстеження')
+  })
+
+  bot.action(`/registerCARORDER`, async (ctx) => {
+    const repository = new DatabaseRepository(SchemaEnum.CAR_ORDER)
+    await repository.createRecord(ctx.chat.id)
+    ctx.reply('Сервіс CARORDER додано для відстеження')
+  })
+
+  bot.action(`/registerADDMODIFICATION`, async (ctx) => {
+    const repository = new DatabaseRepository(SchemaEnum.MODIFICATION)
+    await repository.createRecord(ctx.chat.id)
+    ctx.reply('Сервіс ADDMODIFICATION додано для відстеження')
+  })
+
+  bot.action(`/registerSPAREPARTS`, async (ctx) => {
+    const repository = new DatabaseRepository(SchemaEnum.SPARE_PARTS)
+    await repository.createRecord(ctx.chat.id)
+    ctx.reply('Сервіс SPAREPARTS додано для відстеження')
+  })
+
+  bot.command(`/${password}`, async (ctx) => {
+    ctx.reply("Обрати сервіс для відстеження", {
+      reply_markup: {
+        inline_keyboard: [
+          [ 
+            { text: "PARTNERS", callback_data: "/registerPARTNERS" }, 
+            { text: "FEEDBACK", callback_data: "/registerFEEDBACK" },
+            { text: "CAR ORDER", callback_data: "/registerCARORDER" }
+          ],
+          [
+            { text: "ADD MODIFICATION", callback_data: "/registerADDMODIFICATION" },
+            { text: "SPARE PARTS", callback_data: "/registerSPAREPARTS" },
+          ],
+        ]
+      }
+    });
   })
 
   bot.launch()

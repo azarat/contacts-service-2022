@@ -39,7 +39,7 @@ const start = async (): Promise<void> => {
     await config.init()
     await mongoose.connect(config.mongoUri)
     await app.listen(config.port, '0.0.0.0')
-    // await runBot(BotEnum.PARTNERS_BOT)
+    await runBot(BotEnum.PARTNERS_BOT)
     // await runBot(BotEnum.FEEDBACK_BOT)
     // await runBot(BotEnum.ADD_MODIFICATION_BOT)
     // await runBot(BotEnum.SPARE_PARTS_BOT)
